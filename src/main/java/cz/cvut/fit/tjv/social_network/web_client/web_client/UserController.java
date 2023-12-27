@@ -34,14 +34,22 @@ public class UserController {
     }
 
     @GetMapping("edit")
-    public String edit(Model model, @PathVariable("username") String username){
+    public String editShow(Model model, @PathVariable("username") String username){
         var currOpt = userService.getCurrentUser();
         if(currOpt.isEmpty())
             return "index";
         if(!currOpt.get().getUsername().equals(username)){
             return getUser(model,username);
         }
+        model.addAttribute("user",currOpt.get());
         return "editUser";
+    }
+    @PostMapping("edit")
+    public String editSubmit(Model model, @PathVariable("username")String username, @ModelAttribute UserDto user){
+        if(!userService.isCurrentUser())
+            return getUser(model,username);
+        userService.update(user);
+        return getUser(model,username);
     }
 
 }

@@ -51,7 +51,21 @@ body{
     justify-content: center;
     padding-top: 3rem;
 }
-
+.edit-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50ch;
+    height: 65ch;
+    border-radius: 12px;
+    box-shadow: rgba(50,50,93,0.25) 0px 13px 27px -5px,
+    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    background-color: white;
+}
+.edit-form-inner{
+    margin-top: 5ch;
+    margin-bottom: 5ch;
+}
 .sub-form{
     display: flex;
     flex-direction: column;
@@ -136,6 +150,32 @@ button{
     font-weight: 600;
     width: 100%;
 }
+.button-reverse{
+    padding: 12px 48px;
+    border-radius: 50px;
+    border: 3px solid #1A1B27;
+    color: #1A1B27;
+    margin-top: 1rem;
+    cursor: pointer;
+    outline: none;
+    background-color: white;
+    font-weight: 600;
+    width: 100%;
+}
+
+.button-reverse:hover{
+    padding: 12px 48px;
+    border-radius: 50px;
+    color: white;
+    margin-top: 1rem;
+    cursor: pointer;
+    outline: none;
+    border-width: 0;
+    background-color: #1A1B27;
+    font-weight: 600;
+    width: 100%;
+}
+
 button:hover{
     opacity: 0.8;
 }
