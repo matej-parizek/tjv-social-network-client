@@ -33,9 +33,10 @@ public class UserService {
     public Optional<UserDto> update(UserDto userDto){
         return userClient.update(userDto);
     }
+    public Collection<UserDto> getAll(){
+        return userClient.getAll();
+    }
     public void delete(String username){
-        //todo
-        //compare to current and after delete
         userClient.delete(username);
     }
     public Collection<UserDto> getFollowed(String username){
@@ -64,5 +65,12 @@ public class UserService {
     }
     public Collection<UserDto> getFollowers(String username){
         return userClient.getFollowers(username);
+    }
+
+    public boolean isFollowed(String username) {
+        if(currentUser.equals(username))
+            return false;
+        return userClient.getFollow(currentUser).stream()
+                .anyMatch(userDto -> userDto.getUsername().equals(username));
     }
 }

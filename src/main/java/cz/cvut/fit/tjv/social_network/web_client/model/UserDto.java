@@ -1,21 +1,22 @@
 package cz.cvut.fit.tjv.social_network.web_client.model;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 public class UserDto {
     private String username;
     private String realName;
     private String info;
-    private Collection<UserDto> follower = new ArrayList<>();
-    private Collection<UserDto> followed = new ArrayList<>();
+    private Set<UserDto> followers = new HashSet<>();
+    private Set<UserDto> followed = new HashSet<>();
 
-    public UserDto(String username, String realName, Collection<UserDto> follower, Collection<UserDto> followed,String info) {
+    public UserDto(String username, String realName, Set<UserDto> follower, Set<UserDto> followed,String info) {
         this.username = username;
         this.realName = realName;
         this.info= info;
         if(follower!=null)
-            this.follower = follower;
+            this.followers = follower;
         if(followed!=null)
             this.followed = followed;
     }
@@ -26,7 +27,7 @@ public class UserDto {
                 "username='" + username + '\'' +
                 ", realName='" + realName + '\'' +
                 ", info='" + info + '\'' +
-                ", follower=" + follower +
+                ", follower=" + followers +
                 ", followed=" + followed +
                 '}';
     }
@@ -55,19 +56,19 @@ public class UserDto {
         this.realName = realName;
     }
 
-    public Collection<UserDto> getFollower() {
-        return follower;
+    public Collection<UserDto> getFollowers() {
+        return followers;
     }
 
-    public void setFollower(Collection<UserDto> follower) {
-        this.follower = follower;
+    public void setFollowers(Set<UserDto> followers) {
+        this.followers = followers;
     }
 
     public Collection<UserDto> getFollowed() {
         return followed;
     }
 
-    public void setFollowed(Collection<UserDto> followed) {
+    public void setFollowed(Set<UserDto> followed) {
         this.followed = followed;
     }
 }

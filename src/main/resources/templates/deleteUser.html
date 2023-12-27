@@ -23,35 +23,19 @@
 <div class="form">
     <div  class="edit-form">
         <div class="edit-form-inner">
-            <form method="post" action="#" th:action="@{/{id}/edit(id=${user.getUsername()})}" th:object="${user}">
-                <h2>Edit User</h2>
+            <form method="post" action="#" th:action="@{/{username}/delete(username=${username})}">
+                <h2>Delete User</h2>
                 <label>Username:</label>
                 <label>
-                    <input type="text" name="username" th:field="*{username}" readonly>
-                </label>
-                <label>Real name::</label>
-                <label>
-                    <input type="text" name="realName" th:field="*{realName}">
-                </label>
-                <label>Info:</label>
-                <label>
-                    <input type="text" name="info" th:field="*{info}">
+                    <input type="text" name="control" th:for="control">
                 </label>
                 <div class="btn">
-                    <button type="submit">Submit</button>
-                </div>
-                <div class="btn">
-                    <button type="reset">Reset</button>
+                    <button type="submit">Delete</button>
                 </div>
                 <div class="btn">
                     <button type="button" onclick="history.back()">Exit</button>
                 </div>
-            </form>
-            <form method="get" action="#" th:action="@{/{id}/delete(id=${user.getUsername()})}" th:object="${user}">
-                <div class="btn" >
-                    <button type="submit">Delete</button>
-                </div>
-            </form>
+            </form>-
         </div>
     </div>
 </div>

@@ -56,7 +56,7 @@ body{
     flex-direction: column;
     align-items: center;
     width: 50ch;
-    height: 65ch;
+    height: 75ch;
     border-radius: 12px;
     box-shadow: rgba(50,50,93,0.25) 0px 13px 27px -5px,
     rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
@@ -89,6 +89,7 @@ body{
     background-color: white;
 }
 .stats-form{
+    text-decoration: none;
     width: 23.33333333ch;
     height: 20ch;
     flex-direction: column;
@@ -103,6 +104,8 @@ body{
     align-items: center;
 }
 .stats-text{
+    color: #1A1B27;
+    text-decoration: none;
     font-size: 1.5rem;
     margin-bottom: 0;
 }
@@ -147,6 +150,33 @@ button{
     outline: none;
     border-width: 0;
     background-color: #1A1B27;
+    font-weight: 600;
+    width: 100%;
+}
+#followButton {
+}
+#followButton.unfollowed{
+    padding: 12px 48px;
+    border-radius: 50px;
+    color: white;
+    margin-top: 1rem;
+    cursor: pointer;
+    outline: none;
+    border-width: 0;
+    background-color: #1A1B27;
+    font-weight: 600;
+    width: 100%;
+}
+
+#followButton.followed{
+    padding: 12px 48px;
+    border-radius: 50px;
+    border: 3px solid #1A1B27;
+    color: #1A1B27;
+    margin-top: 1rem;
+    cursor: pointer;
+    outline: none;
+    background-color: white;
     font-weight: 600;
     width: 100%;
 }
@@ -203,10 +233,14 @@ button:hover{
     display: flex;
 }
 .user-posts{
+    color: #1A1B27;
+    text-decoration: none;
     width: 35ch;
     text-align: left;
 }
 .user-edit{
+    color: #1A1B27;
+    text-decoration: none;
     width: 35ch;
     text-align: right;
     margin-right: 5rem;
@@ -217,4 +251,55 @@ button:hover{
     flex-direction: column;
     justify-content: left;
     height: 10rem;
+}
+
+.users-a{
+    color: #1A1B27;
+    align-items: center;
+    width: 50%;
+    text-decoration: none;
+    font-size: 1.3rem;
+}
+.users-table{
+    margin-left: 5ch;
+    padding: 12px 48px;
+    border-radius: 50px;
+    border: 3px solid #1A1B27;
+    color: #1A1B27;
+    margin-top: 0.5rem;
+    cursor: pointer;
+    outline: none;
+    background-color: white;
+    font-weight: 600;
+    width: 70ch;
+    height: 5ch;
+    display: flex;
+    align-items: center;
+    align-content: center;
+}
+.users-form{
+    overflow: auto;
+}
+.users-tr{
+    color: #1A1B27;
+    text-decoration: none;
+    margin-top: 2ch;
+    width: 35ch;
+    height: 5ch;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.users-a-nav{
+    align-items: center;
+    width: 50%;
+    text-decoration: none;
+    font-size: 1.5rem;
+}
+.users-table-nav{
+    margin-left: 5ch;
+    width: 70ch;
+    height: 5ch;
+    display: flex;
+    align-items: center;
 }

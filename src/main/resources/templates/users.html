@@ -11,9 +11,10 @@
 <header>
     <nav class="container">
         <div class="parent-link">
+            <a href="/all-users" class="upper-text"> Find new friends</a>
             <a href="#" class="upper-text"> Home</a>
             <a href="#" class="upper-text"> Create post</a>
-            <a href="#" class="upper-text"> Profil</a>
+            <a th:href="'/'+ ${current} + '/'" class="upper-text"> Profil</a>
         </div>
     </nav>
 </header>
@@ -21,15 +22,15 @@
     <div class="form">
         <div class="user-form">
             <div class="user-info">
-                <label>username:</label>
-                <label class="user-text" th:text="${user.username}">USERNAME:</label>
-                <label>real name:</label>
-                <label class="user-text" th:text="${user.realName}">REAL NAME:</label>
-                <label>info:</label>
-                <label class="user-text" th:text="${user.info}">INFO:</label>
-                <div class="btn">
-                    <button class="button-reverse" type="submit">Follow</button>
-                </div>
+                <label> username:</label>
+                <label class="user-text" th:text=" ${user.username}"> USERNAME:</label>
+                <label> real name:</label>
+                <label class="user-text" th:text=" ${user.realName}"> REAL NAME:</label>
+                <label> info:</label>
+                <label class="user-text" th:text=" ${user.info}"> INFO:</label>
+                <form class="btn"  th:action="${isFollowed} ? '/' + ${user.username} + '/unfollow' : '/' +  ${user.username} + '/follow'" method="post">
+                    <button id="followButton" th:class="${isFollowed} ? 'followed' : 'unfollowed'" th:text="${isFollowed} ? 'Unfollow' : 'Follow'"></button>
+                </form>
             </div>
             <div>
                 <p class="user-stats-form">Stats:<p>
@@ -49,24 +50,24 @@
                 </div>
                 <div class="stats-div">
                     <div class="stats-form">
-                        <a th:text="${user.getFollower().size()}" class="stats-number">20</a>
-                        <a class="stats-text">Followers</a>
+                        <a th:text="${user.getFollowers().size()}" class="stats-number">20</a>
+                        <a th:href="@{/{username}/followers(username=${user.username})}" class="stats-text">Followers</a>
                     </div>
                     <div class="stats-form">
                         <a th:text="${user.getFollowed().size()}" class="stats-number">20</a>
-                        <a class="stats-text">Followed</a>
+                        <a th:href="@{/{username}/followed(username=${user.username})}" class="stats-text">Followed</a>
                     </div>
                     <div class="stats-form">
-                        <a th:text="${friends.size()}" class="stats-number">1500</a>
-                        <a class="stats-text">Friends</a>
+                        <a th:text="${friends.size()}"  class="stats-number">1500</a>
+                        <a th:href="@{/{username}/friends(username=${user.username})}"class="stats-text">Friends</a>
                     </div>
                 </div>
                 <div class="edit">
                     <div class="user-posts">
-                        <a href="#">POSTS</a>
+                        <a class="user-posts" href="#" >POSTS</a>
                     </div>
                     <div class="user-edit">
-                        <a href="#" th:href="@{/{username}/edit(username=${user.username})}">EDIT</a>
+                        <a  class="user-edit" th:href="@{/{username}/edit(username=${user.username})}">EDIT</a>
                     </div>
                 </div>
             </div>

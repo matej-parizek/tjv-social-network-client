@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+    <link rel="stylesheet" href="/style.css">
+    <title>Social Network</title>
+</head>
+<header>
+    <nav class="container">
+        <div class="parent-link">
+            <a href="/all-users" class="upper-text"> Find new friends</a>
+            <a href="#" class="upper-text"> Home</a>
+            <a href="#" class="upper-text"> Create post</a>
+            <a th:href="'/'+ ${current} + '/'" class="upper-text"> Profil</a>
+        </div>
+    </nav>
+</header>
+<body>
+<div class="form">
+    <div class="user-form">
+        <h2 th:text="${usersText}">Follow</h2>
+        <div class="users-table-nav">
+            <div class="users-tr"><a class="users-a-nav">Username:</a></div>
+            <div class="users-tr"><a class="users-a-nav">Real name:</a></div>
+        </div>
+        <div class="users-form">
+            <div class="users-table" th:each="user:${users}" th:href="'/'+${user.getUsername()}+'/'">
+                    <div class="users-tr">
+                        <a th:text="${user.getUsername()}" class="users-a" th:href="'/'+${user.getUsername()}+'/'">20</a>
+                    </div>
+                    <div class="users-tr">
+                        <a th:text="${user.getRealName()}" class="users-a" th:href="'/'+${user.getUsername()}+'/'">20</a>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

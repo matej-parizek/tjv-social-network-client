@@ -65,6 +65,15 @@ public class UserClient {
             return Optional.empty();
         }
     }
+    public Collection<UserDto> getAll(){
+        return List.of(
+                Objects.requireNonNull(userRestClient.get()
+                        .accept(MediaType.APPLICATION_JSON)
+                        .retrieve()
+                        .toEntity(UserDto[].class)
+                        .getBody())
+        );
+    }
     public Optional<UserDto> update(UserDto userDto){
         try {
             return Optional.ofNullable(userRestClient.put()
@@ -83,7 +92,7 @@ public class UserClient {
     public void delete(String username){
         try{
             userRestClient.delete()
-                    .uri("{id}",Map.of("id",username))
+                    .uri("/{id}",Map.of("id",username))
                     .retrieve()
                     .toBodilessEntity();
         }catch (HttpClientErrorException.NotFound e) {
@@ -125,16 +134,18 @@ public class UserClient {
     //todo
     public void unfollow(String username){
         try {
-            userRestClient.delete()
+            currentUserRestClient.delete()
                     .uri(uriBuilder -> uriBuilder
                             .path("/follow")
                             .queryParam("follow",username)
                             .build()
                     )
+                    .accept(MediaType.APPLICATION_JSON)
                     .retrieve()
                     .toBodilessEntity();
         }catch (HttpClientErrorException.NotFound e){
         }catch (HttpClientErrorException.Conflict e){
+            System.out.println("conflict");
         }
     }
     public void create(UserDto userDto){
