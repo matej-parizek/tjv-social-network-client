@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+    <link rel="stylesheet" href="/style.css">
+    <title>Social Network</title>
+</head>
+<header>
+    <nav class="container">
+        <div class="parent-link">
+            <a href="#" class="upper-text"> Home</a>
+            <a href="#" class="upper-text"> Create post</a>
+            <a href="#" class="upper-text"> Profil</a>
+        </div>
+    </nav>
+</header>
+<body>
+    <div class="form">
+        <div class="user-form">
+            <div class="user-info">
+                <label>username:</label>
+                <label class="user-text" th:text="${user.username}">USERNAME:</label>
+                <label>real name:</label>
+                <label class="user-text" th:text="${user.realName}">REAL NAME:</label>
+                <label>info:</label>
+                <label class="user-text" th:text="${user.info}">INFO:</label>
+
+            </div>
+            <div>
+                <p class="user-stats-form">Stats:<p>
+                <div class="stats-div">
+                    <div class="stats-form">
+                        <a th:text="${alllikes}" class="stats-number">20</a>
+                        <p class="stats-text">All likes:</p>
+                    </div>
+                    <div class="stats-form">
+                        <a th:text="${postlikes}" class="stats-number">5</a>
+                        <p class="stats-text">Post likes:</p>
+                    </div>
+                    <div class="stats-form">
+                        <a th:text="${colikes}" class="stats-number">1500</a>
+                        <p class="stats-text">Co-Creator likes:</p>
+                    </div>
+                </div>
+                <div class="stats-div">
+                    <div class="stats-form">
+                        <a th:text="${user.getFollower().size()}" class="stats-number">20</a>
+                        <a class="stats-text">Followers</a>
+                    </div>
+                    <div class="stats-form">
+                        <a th:text="${user.getFollowed().size()}" class="stats-number">20</a>
+                        <a class="stats-text">Followed</a>
+                    </div>
+                    <div class="stats-form">
+                        <a th:text="${friends.size()}" class="stats-number">1500</a>
+                        <a class="stats-text">Friends</a>
+                    </div>
+                </div>
+                <div class="edit">
+                    <div class="user-posts">
+                        <a href="#">POSTS</a>
+                    </div>
+                    <div class="user-edit">
+                        <a href="#" th:href="@{/{username}/edit(username=${user.username})}">EDIT</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

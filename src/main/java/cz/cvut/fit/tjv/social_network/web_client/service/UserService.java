@@ -17,23 +17,52 @@ public class UserService {
         this.userClient = userClient;
     }
 
-    public Collection<UserDto> readUserById(){
-        return userClient.getUserById();
+    public boolean isCurrentUser(){
+        return currentUser!=null;
+    }
+    public void setCurrentUser(String username){
+        this.currentUser=username;
+        userClient.setCurrentUserRestClient(username);
+    }
+    public Optional<UserDto> getCurrentUser(){
+        return userClient.readCurrent();
+    }
+    public Optional<UserDto> readUserById(String username){
+        return userClient.readUserById(username);
+    }
+    public Optional<UserDto> update(UserDto userDto){
+        return userClient.update(userDto);
+    }
+    public void delete(String username){
+        //todo
+        //compare to current and after delete
+        userClient.delete(username);
+    }
+    public Collection<UserDto> getFollowed(String username){
+        return userClient.getFollow(username);
+    }
+    public void follow(String followed){
+        userClient.follow(followed);
+    }
+    public void unfollow(String username){
+        userClient.unfollow(username);
     }
     public void create(UserDto userDto){
         userClient.create(userDto);
     }
-
-    public boolean isCurrentUser(){
-        return currentUser!=null;
+    public long sumPostLikes(String username){
+        return userClient.sumPostLikes(username);
     }
-
-    private void setCurrentUser(String username){
-        this.currentUser=username;
-        userClient.setCurrentUserRestClient(username);
+    public long sumCoWorkerLikes(String username){
+        return userClient.sumCoCreateLikes(username);
     }
-
-    private Optional<UserDto> getCurrentUser(){
-        return userClient.readCurrent();
+    public long sumAllLikes(String username){
+        return sumPostLikes(username)+sumCoWorkerLikes(username);
+    }
+    public Collection<UserDto> getFriends(String username){
+        return userClient.getFriends(username);
+    }
+    public Collection<UserDto> getFollowers(String username){
+        return userClient.getFollowers(username);
     }
 }
