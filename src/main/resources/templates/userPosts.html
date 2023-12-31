@@ -19,25 +19,12 @@
     </nav>
 </header>
 <body>
-
-<div class="form">
-    <div  class="edit-form">
-        <div class="edit-form-inner">
-            <form method="post" action="#" th:action="@{/{username}/delete(username=${username})}">
-                <h2>Delete User</h2>
-                <label>Username:</label>
-                <label>
-                    <input type="text" name="control" th:for="control">
-                </label>
-                <div class="btn">
-                    <button type="submit">Delete</button>
-                </div>
-                <div class="btn">
-                    <button type="button" onclick="history.back()">Exit</button>
-                </div>
-            </form>-
+    <div class="form">
+        <div class="user-form">
+            <div th:each="p : ${posts}">
+                <img alt="img" th:src="'image/jpg;base64'+ ${p.image}"/>
+            </div>
         </div>
     </div>
-</div>
 </body>
 </html>

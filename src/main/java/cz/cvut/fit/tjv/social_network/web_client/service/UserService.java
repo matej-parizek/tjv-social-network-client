@@ -15,6 +15,7 @@ public class UserService {
 
     public UserService(UserClient userClient) {
         this.userClient = userClient;
+        setCurrentUser("test1");
     }
 
     public boolean isCurrentUser(){
@@ -72,5 +73,9 @@ public class UserService {
             return false;
         return userClient.getFollow(currentUser).stream()
                 .anyMatch(userDto -> userDto.getUsername().equals(username));
+    }
+
+    public String getCurrentUsername() {
+        return currentUser;
     }
 }

@@ -1,6 +1,7 @@
 package cz.cvut.fit.tjv.social_network.web_client.web_client;
 
 import cz.cvut.fit.tjv.social_network.web_client.model.UserDto;
+import cz.cvut.fit.tjv.social_network.web_client.service.PostService;
 import cz.cvut.fit.tjv.social_network.web_client.service.UserService;
 import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
@@ -15,11 +16,9 @@ import java.util.Map;
 public class UserController {
     private final UserService userService;
 
-
     public UserController(UserService userService) {
         this.userService = userService;
         //todo
-        userService.setCurrentUser("test1");
     }
     private void current(Model model){
         if(userService.getCurrentUser().isEmpty())
@@ -123,5 +122,6 @@ public class UserController {
         }
         return "editUser";
     }
+
 
 }
