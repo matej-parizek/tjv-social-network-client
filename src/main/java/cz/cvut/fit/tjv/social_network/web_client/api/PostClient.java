@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.websocket.reactive.JettyWebSocketReactiveWebServerCustomizer;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClient;
 
 import java.util.*;
@@ -37,7 +38,7 @@ public class PostClient {
     public Collection<UserDto> getLikes(String username, Long id){
         try {
             return List.of(postClient.get()
-                    .uri("/likes", Map.of("author", username, "id", id))
+                    .uri("/{id}/likes", Map.of("author", username, "id", id))
                     .accept(MediaType.APPLICATION_JSON)
                     .retrieve()
                     .toEntity(UserDto[].class)
@@ -126,5 +127,17 @@ public class PostClient {
                     .toEntity(PostDto.class)
                     .getBody());
         }catch (Exception e){return Optional.empty();}
+    }
+    public Collection<PostDto> getFollowedPost(){
+        try {
+           return List.of(currentPostClient.get()
+                   .uri("/followed")
+                   .accept(MediaType.APPLICATION_JSON)
+                   .retrieve()
+                   .toEntity(PostDto[].class)
+                   .getBody());
+        }catch (HttpClientErrorException.Conflict e){
+            return new ArrayList<>();
+        }
     }
 }

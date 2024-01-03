@@ -2,11 +2,14 @@ package cz.cvut.fit.tjv.social_network.web_client.service;
 
 import cz.cvut.fit.tjv.social_network.web_client.api.PostClient;
 import cz.cvut.fit.tjv.social_network.web_client.api.UserClient;
+import cz.cvut.fit.tjv.social_network.web_client.model.FollowedPosts;
 import cz.cvut.fit.tjv.social_network.web_client.model.PostDto;
 import cz.cvut.fit.tjv.social_network.web_client.model.PostKeyDto;
+import cz.cvut.fit.tjv.social_network.web_client.model.UserDto;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -42,4 +45,30 @@ public class PostService {
         return post;
     }
 
+    public Optional<PostDto> getPost(String username, Long id){
+        return postClient.getPost(username,id);
+    }
+    public Collection<UserDto> getLikes(String username, Long id){
+        return postClient.getLikes(username,id);
+    }
+    public boolean isLiked(String username,Long id) {
+        if(currentUser.equals(username))
+            return false;
+        return postClient.getLikes(username, id).stream() .anyMatch(userDto -> userDto.getUsername().equals(currentUser));
+    }
+    public void like(String username, Long id){
+        postClient.likes(username,id,currentUser);
+    }
+    public void unlike(String username, Long id){
+        postClient.unlikes(username,id,currentUser);
+    }
+    public Collection<FollowedPosts> getFollowedPosts(){
+        Collection<FollowedPosts> followedPosts = new ArrayList<>();
+        var posts = postClient.getFollowedPost();
+        for (var post: posts){
+            boolean isLiked = this.isLiked(post.getKey().getAuthor().getUsername(),post.getKey().getId());
+            followedPosts.add(new FollowedPosts(post,isLiked));
+        }
+        return followedPosts;
+    }
 }

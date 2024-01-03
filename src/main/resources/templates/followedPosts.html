@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+    <link rel="stylesheet" href="/style.css">
+    <title>Social Network</title>
+</head>
+<header>
+    <nav class="container">
+        <div class="parent-link">
+            <a href="/all-users" class="upper-text"> Find new friends</a>
+            <a href="/" class="upper-text"> Home</a>
+            <a href="/create-post" class="upper-text"> Create post</a>
+            <a th:href="'/'+ ${current} + '/'" class="upper-text"> Profil</a>
+        </div>
+    </nav>
+</header>
+<body>
+<div class="form">
+    <div class="user-form">
+        <div class="post-followed">
+            <div class="image-container" th:each="p : ${posts}">
+                <div class="image-container-post-followed" >
+                    <a th:href="'/'+${p.post.key.author.username}+'/'"><h3 th:text="${p.post.key.author.realName} + ' ('+${p.post.key.author.username}+')'"></h3></a>
+                    <img class="post-img-followed" th:src="@{'data:image/jpg;base64,' + ${p.post.image}}" alt="img">
+                    <label>
+                        <textarea  class="post-text"  readonly="readonly" th:text="${p.post.text}"></textarea>
+                    </label>
+                    <a th:text="${p.post.added.toLocalDate()}"></a>
+                </div>
+                <div class="like-container">
+                    <form class="like-button-container" th:action="${p.isLiked} ? '/' + ${p.post.key.author.username} +'/'+ ${p.post.key.id}+ '/unlike'
+                    : '/' + ${p.post.key.author.username} +'/'+ ${p.post.key.id}+ '/like' " method="post" onsubmit="saveScrollPosition()">
+                        <div class="row">
+                            <a class="post-a-text" th:href="'/'+${p.post.key.author.username}+'/p/'+${p.post.key.id}+'/likes'"><h4>Likes:</h4></a>
+                            <a th:text="${p.post.likes.size()}"></a>
+                        </div>
+                        <div>
+                            <button  id="likeButton" th:class="${p.isLiked} ? 'unlike' : 'like'" th:text="${p.isLiked} ? 'Unlike' : 'Like'"></button>
+                        </div>
+                    </form>
+
+                    <form class="comment-button-container">
+                        <div class="row">
+                            <a  class="post-a-text" ><h4>Comments:</h4></a>
+                            <a>0</a>
+                        </div>
+                        <div>
+                            <button th:text="'Comments'"></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

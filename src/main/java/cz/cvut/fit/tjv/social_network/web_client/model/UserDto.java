@@ -21,25 +21,6 @@ public class UserDto {
             this.followed = followed;
     }
 
-    @Override
-    public String toString() {
-        return "UserDto{" +
-                "username='" + username + '\'' +
-                ", realName='" + realName + '\'' +
-                ", info='" + info + '\'' +
-                ", follower=" + followers +
-                ", followed=" + followed +
-                '}';
-    }
-
-    public String getInfo() {
-        return info;
-    }
-
-    public void setInfo(String info) {
-        this.info = info;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -56,7 +37,15 @@ public class UserDto {
         this.realName = realName;
     }
 
-    public Collection<UserDto> getFollowers() {
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
+    public Set<UserDto> getFollowers() {
         return followers;
     }
 
@@ -64,11 +53,22 @@ public class UserDto {
         this.followers = followers;
     }
 
-    public Collection<UserDto> getFollowed() {
+    public Set<UserDto> getFollowed() {
         return followed;
     }
 
     public void setFollowed(Set<UserDto> followed) {
         this.followed = followed;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDto{" +
+                "username='" + username + '\'' +
+                ", realName='" + realName + '\'' +
+                ", info='" + info + '\'' +
+                ", followers=" + followers +
+                ", followed=" + followed +
+                '}';
     }
 }

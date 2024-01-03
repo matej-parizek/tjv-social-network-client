@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+    <link rel="stylesheet" href="/style.css">
+    <title>Social Network</title>
+</head>
+<header>
+    <nav class="container">
+        <div class="parent-link">
+            <a href="/all-users" class="upper-text"> Find new friends</a>
+            <a href="/" class="upper-text"> Home</a>
+            <a href="/create-post" class="upper-text"> Create post</a>
+            <a th:href="'/'+ ${current} + '/'" class="upper-text"> Profil</a>
+        </div>
+    </nav>
+</header>
+<body>
+<div class="form">
+    <div class="user-form">
+        <div class="image-container">
+            <div class="image-container-post" >
+                <img class="post-img" th:src="@{'data:image/jpg;base64,' + ${post.getImage()}}" alt="img">
+                <label>
+                    <textarea  class="post-text" th:field="${post.text}" readonly="readonly"></textarea>
+                </label>
+                <a th:text="${post.added.toLocalDate()}"></a>
+            </div>
+            <div class="like-container">
+                <form class="like-button-container" th:action="${isLiked} ? '/' + ${post.key.author.username} +'/p/'+ ${post.key.id}+ '/unlike'
+                : '/' + ${post.key.author.username} +'/p/'+ ${post.key.id}+ '/like' " method="post">
+                    <div class="row">
+                        <a class="post-a-text" th:href="'/'+${post.key.author.username}+'/p/'+${post.key.id}+'/likes'"><h4>Likes:</h4></a>
+                        <a th:text="${post.likes.size()}"></a>
+                    </div>
+                    <div>
+                        <button  id="likeButton" th:class="${isLiked} ? 'unlike' : 'like'" th:text="${isLiked} ? 'Unlike' : 'Like'"></button>
+                    </div>
+                </form>
+
+                <form class="comment-button-container">
+                    <div class="row">
+                        <a  class="post-a-text" ><h4>Comments:</h4></a>
+                        <a>0</a>
+                    </div>
+                    <div>
+                        <button th:text="'Comments'"></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

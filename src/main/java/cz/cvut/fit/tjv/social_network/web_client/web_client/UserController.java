@@ -1,15 +1,10 @@
 package cz.cvut.fit.tjv.social_network.web_client.web_client;
 
 import cz.cvut.fit.tjv.social_network.web_client.model.UserDto;
-import cz.cvut.fit.tjv.social_network.web_client.service.PostService;
 import cz.cvut.fit.tjv.social_network.web_client.service.UserService;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Collection;
-import java.util.Map;
 
 @Controller
 @RequestMapping()
@@ -18,7 +13,6 @@ public class UserController {
 
     public UserController(UserService userService) {
         this.userService = userService;
-        //todo
     }
     private void current(Model model){
         if(userService.getCurrentUser().isEmpty())
@@ -30,7 +24,6 @@ public class UserController {
         current(model);
         var userOpt = userService.readUserById(username);
         if (userOpt.isEmpty())
-            //todo
             return "index";
         var isFollowed = userService.isFollowed(username);
         model.addAttribute("isFollowed",isFollowed);
@@ -39,7 +32,7 @@ public class UserController {
         model.addAttribute("postlikes", userService.sumPostLikes(username));
         model.addAttribute("friends",userService.getFriends(username));
         model.addAttribute("user", userOpt.get());
-        return "users";
+        return "user";
     }
 
     @GetMapping("/{username}/edit")
@@ -59,17 +52,17 @@ public class UserController {
         if(!userService.isCurrentUser())
             return getUser(model,username);
         userService.update(user);
-        return getUser(model,username);
+        return "redirect:/"+username+"/";
     }
     @PostMapping("/{username}/follow")
     public String follow(Model model, @PathVariable("username") String username){
         userService.follow(username);
-        return getUser(model, username);
+        return "redirect:/"+username+"/";
     }
     @PostMapping("/{username}/unfollow")
     public String unfollow(Model model, @PathVariable("username") String username){
         userService.unfollow(username);
-        return getUser(model,username);
+        return "redirect:/"+username+"/";
     }
     @GetMapping("/{username}/followed")
     public String getFollowed(Model model, @PathVariable("username") String username){
@@ -115,13 +108,11 @@ public class UserController {
             return "index";
         var currentUser= currentUserOpt.get();
         if(!username.equals(currentUser.getUsername()))
-            return "users";
+            return "user";
         if(control.equals(username)) {
             userService.delete(username);
             return "index";
         }
         return "editUser";
     }
-
-
 }

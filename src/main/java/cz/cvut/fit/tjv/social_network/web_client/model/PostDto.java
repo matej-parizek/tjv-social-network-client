@@ -10,12 +10,12 @@ public class PostDto {
     private PostKeyDto key;
     private LocalDateTime added;
     private String text;
-    private byte[] image;
+    private String image;
     private Collection<UserDto> likes = new HashSet<>();
     public PostDto() {
     }
 
-    public PostDto(PostKeyDto key, byte[] image, LocalDateTime added, Set<UserDto> likes, String text) {
+    public PostDto(PostKeyDto key, String image, LocalDateTime added, Set<UserDto> likes, String text) {
         this.key = key;
         this.image = image;
         this.added = added;
@@ -47,11 +47,11 @@ public class PostDto {
         this.text = text;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
@@ -63,13 +63,14 @@ public class PostDto {
         this.likes = likes;
     }
 
+
     @Override
     public String toString() {
         return "PostDto{" +
                 "key=" + key +
                 ", added=" + added +
                 ", text='" + text + '\'' +
-                ", image=" + Arrays.toString(image) +
+                ", image='" + image + '\'' +
                 ", likes=" + likes +
                 '}';
     }

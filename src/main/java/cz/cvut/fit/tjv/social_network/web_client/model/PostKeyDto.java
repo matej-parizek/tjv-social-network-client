@@ -4,9 +4,6 @@ package cz.cvut.fit.tjv.social_network.web_client.model;
 public class PostKeyDto {
     private UserDto author;
     private long id;
-    public PostKeyDto(UserDto author) {
-        this.author = author;
-    }
 
     public PostKeyDto(UserDto author, long id) {
         this.author = author;
