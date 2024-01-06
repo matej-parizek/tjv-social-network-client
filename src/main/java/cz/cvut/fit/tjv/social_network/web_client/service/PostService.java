@@ -40,7 +40,7 @@ public class PostService {
             return Optional.empty();
         }
         var current = currentOpt.get();
-        long id =0; //(long) postClient.getUserAllPost(currentUser).size();
+        long id = (long) postClient.getUserAllPost(currentUser).size();
         postDto.setAdded(LocalDateTime.now());
         postDto.setKey(new PostKeyDto(current,id));
         var post =postClient.create(postDto);
