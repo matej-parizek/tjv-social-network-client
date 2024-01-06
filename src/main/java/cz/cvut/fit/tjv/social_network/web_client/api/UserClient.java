@@ -148,14 +148,21 @@ public class UserClient {
             System.out.println("conflict");
         }
     }
-    public void create(UserDto userDto){
-        userRestClient.post()
-                .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(userDto)
-                .retrieve()
-                .toBodilessEntity();
+    public Optional<UserDto> create(UserDto userDto){
+        try {
+
+           return Optional.of( userRestClient.post()
+                    .accept(MediaType.APPLICATION_JSON)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(userDto)
+                    .retrieve()
+                   .toEntity(UserDto.class)
+                   .getBody());
+        }catch (HttpClientErrorException.Conflict e){
+            return Optional.empty();
+        }
     }
+
     public long sumCoCreateLikes(String username){
         try {
             return userRestClient.get()

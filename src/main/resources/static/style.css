@@ -82,7 +82,7 @@ body{
     flex-direction: column;
     align-items: center;
     width: 45ch;
-    height: 50ch;
+    height: 60ch;
     border-radius: 12px;
     box-shadow: rgba(50,50,93,0.25) 0px 13px 27px -5px,
     rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
@@ -572,4 +572,40 @@ input[type=checkbox]:checked:disabled + label:before {
 a{
     text-decoration: none;
     color: #1A1B27;
+}
+
+.error{
+    background-color: #ff1000;
+    border-style: solid;
+    border-radius: 15px;
+    border-color: #c80000;
+    color: #ffffff;
+    text-align: center;
+    font-size: 17px;
+    width: 15rem;
+    height: 1.7rem;
+}
+
+.comment-text{
+
+    padding: 12px 48px;
+    border-radius: 50px;
+    color: white;
+    margin-top: 1rem;
+    cursor: pointer;
+    outline: none;
+    border-width: 0;
+    background-color: #1A1B27;
+    font-weight: 400;
+    width: 100%;
+}
+.comment-text-container{
+    margin-top: 1.5rem;
+}
+
+.password-visibility{
+    display: flex;
+    margin-bottom: 2rem;
+    flex-direction: column;
+    font-size: 12px;
 }

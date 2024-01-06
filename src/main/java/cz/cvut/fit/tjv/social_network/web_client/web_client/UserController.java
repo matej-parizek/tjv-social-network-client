@@ -2,6 +2,7 @@ package cz.cvut.fit.tjv.social_network.web_client.web_client;
 
 import cz.cvut.fit.tjv.social_network.web_client.model.UserDto;
 import cz.cvut.fit.tjv.social_network.web_client.service.UserService;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,8 @@ public class UserController {
     }
     @GetMapping("/{username}/")
     public String getUser(Model model, @PathVariable String username){
+        if(userService.getCurrentUsername()==null)
+            return "redirect:/login";
         current(model);
         var userOpt = userService.readUserById(username);
         if (userOpt.isEmpty())
@@ -37,6 +40,8 @@ public class UserController {
 
     @GetMapping("/{username}/edit")
     public String editShow(Model model, @PathVariable("username") String username){
+        if(userService.getCurrentUsername()==null)
+            return "redirect:/login";
         this.current(model);
         var currOpt = userService.getCurrentUser();
         if(currOpt.isEmpty())
@@ -50,22 +55,24 @@ public class UserController {
     @PostMapping("/{username}/edit")
     public String editSubmit(Model model, @PathVariable("username")String username, @ModelAttribute UserDto user){
         if(!userService.isCurrentUser())
-            return getUser(model,username);
+            return "redirect:/"+username+"/";
         userService.update(user);
         return "redirect:/"+username+"/";
     }
     @PostMapping("/{username}/follow")
-    public String follow(Model model, @PathVariable("username") String username){
+    public String follow( @PathVariable("username") String username){
         userService.follow(username);
         return "redirect:/"+username+"/";
     }
     @PostMapping("/{username}/unfollow")
-    public String unfollow(Model model, @PathVariable("username") String username){
+    public String unfollow( @PathVariable("username") String username){
         userService.unfollow(username);
         return "redirect:/"+username+"/";
     }
     @GetMapping("/{username}/followed")
     public String getFollowed(Model model, @PathVariable("username") String username){
+        if(userService.getCurrentUsername()==null)
+            return "redirect:/login";
         current(model);
         model.addAttribute("usersText","Followed");
         model.addAttribute("users",userService.getFollowed(username));
@@ -73,6 +80,8 @@ public class UserController {
     }
     @GetMapping("/{username}/followers")
     public String getFollowers(Model model, @PathVariable("username") String username){
+        if(userService.getCurrentUsername()==null)
+            return "redirect:/login";
         current(model);
         model.addAttribute("usersText","Followers");
         model.addAttribute("users",userService.getFollowers(username));
@@ -80,6 +89,8 @@ public class UserController {
     }
     @GetMapping("/{username}/friends")
     public String getFriends(Model model, @PathVariable("username") String username){
+        if(userService.getCurrentUsername()==null)
+            return "redirect:/login";
         current(model);
         model.addAttribute("usersText","Friends");
         model.addAttribute("users",userService.getFriends(username));
@@ -87,6 +98,8 @@ public class UserController {
     }
     @GetMapping("all-users")
     public String getAll(Model model){
+        if(userService.getCurrentUsername()==null)
+            return "redirect:/login";
         current(model);
         model.addAttribute("usersText","All users");
         model.addAttribute("users",userService.getAll());
@@ -94,6 +107,8 @@ public class UserController {
     }
     @GetMapping("/{username}/delete")
     public String delete(Model model, @PathVariable("username") String username){
+        if(userService.getCurrentUsername()==null)
+            return "redirect:/login";
         this.current(model);
         var currentUserOpt = userService.getCurrentUser();
         if(currentUserOpt.isEmpty())
@@ -102,17 +117,20 @@ public class UserController {
     }
     @PostMapping("/{username}/delete")
     public String deleteSubmit(Model model, @PathVariable("username") String username,  String control){
+        if(userService.getCurrentUsername()==null)
+            return "redirect:/login";
         this.current(model);
         var currentUserOpt = userService.getCurrentUser();
         if(currentUserOpt.isEmpty())
-            return "index";
+            return "redirect:/login";
         var currentUser= currentUserOpt.get();
         if(!username.equals(currentUser.getUsername()))
-            return "user";
+            return "redirect:/"+username+"/";
         if(control.equals(username)) {
             userService.delete(username);
-            return "index";
+            return "redirect:/login";
         }
         return "editUser";
     }
+
 }

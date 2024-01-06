@@ -10,8 +10,20 @@ public class UserDto {
     private String info;
     private Set<UserDto> followers = new HashSet<>();
     private Set<UserDto> followed = new HashSet<>();
+    private String password;
 
-    public UserDto(String username, String realName, Set<UserDto> follower, Set<UserDto> followed,String info) {
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public UserDto() {
+    }
+
+    public UserDto(String username, String realName, Set<UserDto> follower, Set<UserDto> followed, String info) {
         this.username = username;
         this.realName = realName;
         this.info= info;

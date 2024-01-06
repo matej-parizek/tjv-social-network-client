@@ -29,7 +29,7 @@ public class PostController {
     public PostController(PostService postService, UserService userService) {
         this.userService=userService;
         this.postService = postService;
-        postService.setCurrent("test1");
+//        postService.setCurrent("test1");
     }
     private void current(Model model){
         if(userService.getCurrentUser().isEmpty())
@@ -39,6 +39,8 @@ public class PostController {
 
     @GetMapping("/{author}/p")
     public String getUserAllPost(Model model, @PathVariable("author") String username){
+        if(userService.getCurrentUsername()==null)
+            return "redirect:/login";
         current(model);
         var post = postService.getAllUserPosts(username);
         model.addAttribute("posts",post);
@@ -47,6 +49,8 @@ public class PostController {
     @GetMapping("/create-post")
     public String create(Model model){
         current(model);
+        if(userService.getCurrentUsername()==null)
+            return "redirect:/login";
         var post = new PostDto();
         model.addAttribute("post",post);
         StringField coUsername = new StringField();
@@ -58,6 +62,8 @@ public class PostController {
     @PostMapping("/create-post")
     public String createSubmit(Model model,@ModelAttribute PostDto post, @ModelAttribute StringField coUsername,
                                @ModelAttribute CheckBox coBool, @RequestParam("file") MultipartFile file){
+        if(userService.getCurrentUsername()==null)
+            return "redirect:/login";
         current(model);
         try {
             byte[] byteImg = file.getBytes();
@@ -71,6 +77,8 @@ public class PostController {
     }
     @GetMapping("/{author}/p/{id}")
     public String getUserPost(Model model, @PathVariable("author") String username, @PathVariable("id") Long id){
+        if(userService.getCurrentUsername()==null)
+            return "redirect:/login";
         current(model);
         var postOpt = postService.getPost(username,id);
         if(postOpt.isEmpty())
@@ -79,6 +87,8 @@ public class PostController {
         model.addAttribute("post",post);
         boolean isLiked = postService.isLiked(username,id);
         model.addAttribute("isLiked",isLiked);
+        var commentSize= postService.commentsSize(username,id);
+        model.addAttribute("commentSize",commentSize);
         return "userPost";
     }
 
@@ -92,12 +102,16 @@ public class PostController {
     }
     @PostMapping("/{author}/p/{id}/like")
     public String like(Model model, @PathVariable("author") String username, @PathVariable("id") Long id){
+        if(userService.getCurrentUsername()==null)
+            return "redirect:/login";
         current(model);
-       postService.like(username,id);
-       return "redirect:/"+username+"/p/"+id.toString();
+        postService.like(username,id);
+        return "redirect:/"+username+"/p/"+id.toString();
     }
     @PostMapping("/{author}/p/{id}/unlike")
     public String unlike(Model model, @PathVariable("author") String username, @PathVariable("id") Long id){
+        if(userService.getCurrentUsername()==null)
+            return "redirect:/login";
         current(model);
         postService.unlike(username,id);
         return "redirect:/"+username+"/p/"+id.toString();

@@ -20,16 +20,24 @@
     </nav>
 </header>
 <body>
-    <div class="form">
-        <div class="user-form">
-            <form class="container-posts">
-                <div class="image-container-posts" th:each="p: ${posts}">
-                    <a th:href="'/'+${p.key.author.username}+ '/p/' + ${p.key.id}">
-                    <img id="postImg" th:src="'data:image/jpg;base64,' + ${p.getImage()}" alt="img">
-                    </a>
+<div class="form">
+    <div class="user-form" >
+        <h2 >Comments</h2>
+        <div class="users-table-nav">
+            <div class="users-tr"><a class="users-a-nav">Author(username):</a></div>
+            <div class="users-tr"><a class="users-a-nav">Text:</a></div>
+        </div>
+        <div class="users-form">
+            <div class="users-table" th:each="comment: ${comments}">
+                <div class="users-tr">
+                    <a class="users-a" th:text="${comment.author.realName}+' ('+${comment.author.username}+')'" th:href="'/'+${comment.author.username}+'/'">20</a>
                 </div>
-            </form>
+                <div class="users-tr">
+                    <a class="users-a" th:text="${comment.text}">20</a>
+                </div>
+            </div>
         </div>
     </div>
+</div>
 </body>
 </html>

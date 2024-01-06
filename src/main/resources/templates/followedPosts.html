@@ -15,6 +15,7 @@
             <a href="/" class="upper-text"> Home</a>
             <a href="/create-post" class="upper-text"> Create post</a>
             <a th:href="'/'+ ${current} + '/'" class="upper-text"> Profil</a>
+            <a href="/logout" class="upper-text"> Logout</a>
         </div>
     </nav>
 </header>
@@ -42,14 +43,15 @@
                             <button  id="likeButton" th:class="${p.isLiked} ? 'unlike' : 'like'" th:text="${p.isLiked} ? 'Unlike' : 'Like'"></button>
                         </div>
                     </form>
-
                     <form class="comment-button-container">
                         <div class="row">
-                            <a  class="post-a-text" ><h4>Comments:</h4></a>
-                            <a>0</a>
+                            <a  class="post-a-text" th:href="'/'+${p.post.key.author.username}+'/p/'+${p.post.key.id}+'/comments'"><h4>Comments:</h4></a>
+                            <a th:text="${p.commentsSize}"></a>
                         </div>
-                        <div>
-                            <button th:text="'Comments'"></button>
+                        <div class="comment-text-container">
+                            <a class="comment-text" th:href="@{'/' + ${p.post.key.author.username} + '/p/' + ${p.post.key.id} + '/create-comment'}">
+                                Comment
+                            </a>
                         </div>
                     </form>
                 </div>

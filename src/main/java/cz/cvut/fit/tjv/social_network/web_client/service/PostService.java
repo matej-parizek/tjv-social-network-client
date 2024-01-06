@@ -1,5 +1,6 @@
 package cz.cvut.fit.tjv.social_network.web_client.service;
 
+import cz.cvut.fit.tjv.social_network.web_client.api.CommentClient;
 import cz.cvut.fit.tjv.social_network.web_client.api.PostClient;
 import cz.cvut.fit.tjv.social_network.web_client.api.UserClient;
 import cz.cvut.fit.tjv.social_network.web_client.model.FollowedPosts;
@@ -17,11 +18,15 @@ import java.util.Optional;
 public class PostService {
     private PostClient postClient;
     private UserClient userClient;
+    private CommentClient commentClient;
     String currentUser;
-    public PostService( PostClient postClient, UserClient userClient) {
+
+    public PostService(PostClient postClient, UserClient userClient, CommentClient commentClient) {
         this.postClient = postClient;
         this.userClient = userClient;
+        this.commentClient = commentClient;
     }
+
     public void setCurrent(String username){
         currentUser=username;
         postClient.setCurrentUserRestClient(username);
@@ -35,13 +40,12 @@ public class PostService {
             return Optional.empty();
         }
         var current = currentOpt.get();
-        long id = (long) postClient.getUserAllPost(currentUser).size();
+        long id =0; //(long) postClient.getUserAllPost(currentUser).size();
         postDto.setAdded(LocalDateTime.now());
         postDto.setKey(new PostKeyDto(current,id));
         var post =postClient.create(postDto);
         if(isCo)
             postClient.coCreate(coUsername, postDto.getKey().getAuthor(), postDto.getKey().getId());
-
         return post;
     }
 
@@ -67,8 +71,13 @@ public class PostService {
         var posts = postClient.getFollowedPost();
         for (var post: posts){
             boolean isLiked = this.isLiked(post.getKey().getAuthor().getUsername(),post.getKey().getId());
-            followedPosts.add(new FollowedPosts(post,isLiked));
+            Long sizeComments = (long)commentClient.getComments(post.getKey().getAuthor().getUsername(),post.getKey().getId()).size();
+            followedPosts.add(new FollowedPosts(post,isLiked,sizeComments));
         }
         return followedPosts;
+    }
+
+    public Long commentsSize(String username, Long id){
+        return (long) commentClient.getComments(username, id).size();
     }
 }

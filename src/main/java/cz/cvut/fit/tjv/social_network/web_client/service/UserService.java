@@ -15,7 +15,7 @@ public class UserService {
 
     public UserService(UserClient userClient) {
         this.userClient = userClient;
-        setCurrentUser("test1");
+//        setCurrentUser("test1");
     }
 
     public boolean isCurrentUser(){
@@ -23,7 +23,11 @@ public class UserService {
     }
     public void setCurrentUser(String username){
         this.currentUser=username;
-        userClient.setCurrentUserRestClient(username);
+        try {
+            userClient.setCurrentUserRestClient(username);
+        }catch (Exception e){
+            return;
+        }
     }
     public Optional<UserDto> getCurrentUser(){
         return userClient.readCurrent();
@@ -49,8 +53,8 @@ public class UserService {
     public void unfollow(String username){
         userClient.unfollow(username);
     }
-    public void create(UserDto userDto){
-        userClient.create(userDto);
+    public Optional<UserDto> create(UserDto userDto){
+        return userClient.create(userDto);
     }
     public long sumPostLikes(String username){
         return userClient.sumPostLikes(username);
