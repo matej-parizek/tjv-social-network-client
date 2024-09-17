@@ -1,9 +1,15 @@
-# Social_network_client
+# Social Network Client
 
-## Client for Social network server
+## Overview
 
->Všechny informace jsou na adrese serveru
+This repository contains the client application for the Social Network server. It interacts with the server to provide a user interface for managing social network functionalities.
 
-### Server: https://gitlab.fit.cvut.cz/parizmat/social_network_server
+**All relevant information and API details are available on the server repository.**
 
-### Client port: http://localhost:9080/
+### Server Repository
+
+- [Social Network Server](https://gitlab.fit.cvut.cz/parizmat/social_network_server)
+
+### Client Access
+
+- **Client URL**: [http://localhost:9080/](http://localhost:9080/)
